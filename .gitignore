@@ -198,3 +198,7 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/venv,git,pycharm,jetbrains+all
+__pycache__
+__pycache__/
+__pycache__*
+.directory

@@ -3,15 +3,11 @@ from datetime import datetime as dt
 from socket import gethostname
 
 
-class Handler:
+class StatusHandler:
     def __init__(self):
         pass
 
-    async def index(self, request):
-        data = {'text': 'Hello'}
-        return web.json_response(data)
-
-    async def status(self, request):
+    async def handler(self, request):
         dt_now = dt.now()
         data = {
             'timestamp': dt_now.timestamp(),
