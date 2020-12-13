@@ -1,8 +1,5 @@
 from aiohttp import web
-import asyncio
-import async_timeout
-
-from hw import create_app
+from src import create_app
 
 app = create_app()
 
