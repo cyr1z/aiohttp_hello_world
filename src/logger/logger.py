@@ -19,7 +19,7 @@ def run_logger():
     )
 
     logger.add(
-        "logger.json",
+        "logfile.json",
         rotation="1 week",
         format="{time} {level} {message}",
         level="WARNING",

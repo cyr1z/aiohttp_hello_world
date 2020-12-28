@@ -202,3 +202,5 @@ __pycache__
 __pycache__/
 __pycache__*
 .directory
+*.log
+logfile.json
