@@ -1,57 +1,35 @@
+import _io
 import sys
+
+from dotenv import dotenv_values
 
 from loguru import logger
 
+from src.logger.logger_settings import FORMAT, ROTATION, CHANNELS, \
+    DEFAULT_LEVEL, COMPRESSION
+
+config = dotenv_values(".env")
+
 
 def run_logger():
+    for channel in CHANNELS:
 
-    logger.add(
-        "logfile.log",
-        format="{time} {level} {message}",
-        level="DEBUG",
-        rotation="1 week",
-        compression="zip",
-        colorize=False,
-        serialize=False,
-        diagnose=True,
-        backtrace=True,
-        enqueue=True,
-    )
+        log_level = channel.get('level', DEFAULT_LEVEL)
+        if config.get('PROD'):
+            log_level = channel.get('prod_level', DEFAULT_LEVEL)
 
-    logger.add(
-        "logfile.json",
-        rotation="1 week",
-        format="{time} {level} {message}",
-        level="WARNING",
-        compression="zip",
-        colorize=False,
-        serialize=True,
-        diagnose=False,
-        backtrace=False,
-        enqueue=True,
-    )
-
-    logger.add(
-        sys.stderr,
-        format="{time} {level} {message}",
-        filter="my_module",
-        level="ERROR",
-        colorize=True,
-        diagnose=True,
-        backtrace=True,
-        enqueue=True,
-    )
-
-    logger.add(
-        sys.stdout,
-        format="{time} {level} {message}",
-        filter="my_module",
-        level="DEBUG",
-        colorize=True,
-        diagnose=True,
-        backtrace=True,
-        enqueue=True,
-    )
+        arguments = {'format': channel.get('format', FORMAT),
+                     'level': log_level,
+                     'colorize': channel.get('colorize', False),
+                     'serialize': channel.get('serialize', False),
+                     'diagnose': channel.get('diagnose', False),
+                     'backtrace': channel.get('backtrace', False)}
+        if isinstance(channel.get('channel'), str):
+            arguments.update({
+                'enqueue': channel.get('enqueue', True),
+                'compression': channel.get('compression', COMPRESSION),
+            })
+        logger.add(channel.get('channel'), **arguments)
 
 
 if __name__ == "__main__":

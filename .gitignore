@@ -204,3 +204,5 @@ __pycache__*
 .directory
 *.log
 logfile.json
+*.env
+.env
