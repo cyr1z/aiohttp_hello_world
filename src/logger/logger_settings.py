@@ -35,7 +35,7 @@ CHANNELS = [
     },
     {
         'channel': sys.stderr,
-        'level': 'DEBUG',
+        'level': 'ERROR',
         'colorize': True,
         'diagnose': True,
         'backtrace': True,
